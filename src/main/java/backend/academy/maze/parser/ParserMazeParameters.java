@@ -3,8 +3,8 @@ package backend.academy.maze.parser;
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Coordinate;
 import backend.academy.maze.maze.Maze;
+import backend.academy.maze.utils.RandomUtil;
 import java.io.PrintWriter;
-import java.security.SecureRandom;
 import java.util.Scanner;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +21,6 @@ public class ParserMazeParameters {
 
     private final Scanner scanner;
     private final PrintWriter writer;
-    private final SecureRandom random;
 
     /**
      * Метод для получения параметров размера лабиринта (высоты и ширины)
@@ -44,7 +43,7 @@ public class ParserMazeParameters {
 
             if (sizeParameterLine.isEmpty()) {
                 // Случайный выбор, параметр 100% валиден
-                sizeParameter = random.nextInt(MIN_SIZE, maxSize + 1);
+                sizeParameter = RandomUtil.getRandomInt(MIN_SIZE, maxSize + 1);
                 break;
             }
 
@@ -185,7 +184,7 @@ public class ParserMazeParameters {
         Coordinate coordinate;
 
         do {
-            coordinate = maze.getRandomCoordinate(random);
+            coordinate = maze.getRandomCoordinate();
         } while (isFinish && coordinate.equals(startCoordinate));
 
         return coordinate;

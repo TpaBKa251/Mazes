@@ -4,7 +4,7 @@ import backend.academy.maze.generator.GeneratorMaze;
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Coordinate;
 import backend.academy.maze.maze.Maze;
-import java.security.SecureRandom;
+import backend.academy.maze.utils.RandomUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class GeneratorPrim extends GeneratorMaze {
 
-    public GeneratorPrim(SecureRandom random, int maxHeight, int maxWidth) {
-        super(random, maxHeight, maxWidth);
+    public GeneratorPrim(int maxHeight, int maxWidth) {
+        super(maxHeight, maxWidth);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class GeneratorPrim extends GeneratorMaze {
         );
 
         while (!walls.isEmpty()) {
-            Coordinate wall = walls.remove(random.nextInt(walls.size()));
+            Coordinate wall = walls.remove(RandomUtil.getRandomInt(walls.size()));
             int row = wall.row();
             int col = wall.col();
 

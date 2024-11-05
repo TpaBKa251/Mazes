@@ -1,7 +1,6 @@
 package backend.academy.maze.generator;
 
 import backend.academy.maze.generator.impl.GeneratorDfs;
-import java.security.SecureRandom;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +15,7 @@ public class GeneratorMazeTest {
     @ParameterizedTest(name = "высота = {0}, ширина = {1}, валидные значения: 3 <= высота <= {2}; 3 <= ширина <= {3}")
     @MethodSource("provideDataTestValidation")
     void testValidation(int height, int width, int maxHeight, int maxWidth) {
-        GeneratorMaze generatorMaze = new GeneratorDfs(new SecureRandom(), maxHeight, maxWidth);
+        GeneratorMaze generatorMaze = new GeneratorDfs(maxHeight, maxWidth);
 
         assertThatThrownBy(() -> generatorMaze.generateMaze(height, width))
             .isInstanceOf(IllegalArgumentException.class)

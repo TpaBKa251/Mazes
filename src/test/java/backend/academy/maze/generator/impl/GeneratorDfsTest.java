@@ -3,7 +3,6 @@ package backend.academy.maze.generator.impl;
 import backend.academy.maze.generator.GeneratorMaze;
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Maze;
-import java.security.SecureRandom;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ public class GeneratorDfsTest {
     @DisplayName("Тест создания непустого лабиринта с корректными размерами")
     @Test
     void testGenerateMaze() {
-        GeneratorMaze generatorMaze = new GeneratorDfs(new SecureRandom(), 100, 100);
+        GeneratorMaze generatorMaze = new GeneratorDfs(100, 100);
 
         int expectedHeight = 10;
         int expectedWidth = 15;

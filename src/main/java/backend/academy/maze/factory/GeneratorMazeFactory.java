@@ -5,8 +5,8 @@ import backend.academy.maze.generator.GeneratorMaze;
 import backend.academy.maze.generator.impl.GeneratorDfs;
 import backend.academy.maze.generator.impl.GeneratorKruskal;
 import backend.academy.maze.generator.impl.GeneratorPrim;
+import backend.academy.maze.utils.RandomUtil;
 import java.io.PrintWriter;
-import java.security.SecureRandom;
 import java.util.Scanner;
 import lombok.experimental.UtilityClass;
 
@@ -39,7 +39,6 @@ public class GeneratorMazeFactory {
     public GeneratorMaze createGeneratorMazeFromConsole(
         Scanner scanner,
         PrintWriter writer,
-        SecureRandom random,
         int maxHeight,
         int maxWidth
     ) {
@@ -47,27 +46,27 @@ public class GeneratorMazeFactory {
 
         String selectedGenerator = scanner.nextLine().trim();
 
-        GeneratorMaze[] allGenerators = {new GeneratorDfs(random, maxHeight, maxWidth),
-            new GeneratorKruskal(random, maxHeight, maxWidth),
-            new GeneratorPrim(random, maxHeight, maxWidth)};
+        GeneratorMaze[] allGenerators = {new GeneratorDfs(maxHeight, maxWidth),
+            new GeneratorKruskal(maxHeight, maxWidth),
+            new GeneratorPrim(maxHeight, maxWidth)};
 
         writer.print("\nАлгоритм генерации: ");
 
         switch (selectedGenerator) {
             case "1" -> {
                 writer.print(GeneratorMazeType.DFS.generatorName() + '\n');
-                return new GeneratorDfs(random, maxHeight, maxWidth);
+                return new GeneratorDfs(maxHeight, maxWidth);
             }
             case "2" -> {
                 writer.print(GeneratorMazeType.KRUSKAL.generatorName() + '\n');
-                return new GeneratorKruskal(random, maxHeight, maxWidth);
+                return new GeneratorKruskal(maxHeight, maxWidth);
             }
             case "3" -> {
                 writer.print(GeneratorMazeType.PRIM.generatorName() + '\n');
-                return new GeneratorPrim(random, maxHeight, maxWidth);
+                return new GeneratorPrim(maxHeight, maxWidth);
             }
             default -> {
-                int generatorNumber = random.nextInt(allGenerators.length);
+                int generatorNumber = RandomUtil.getRandomInt(allGenerators.length);
                 writer.print(GeneratorMazeType.values()[generatorNumber].generatorName() + '\n');
                 return allGenerators[generatorNumber];
             }

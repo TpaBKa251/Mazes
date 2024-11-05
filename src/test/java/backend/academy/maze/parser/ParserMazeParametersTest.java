@@ -6,14 +6,17 @@ import backend.academy.maze.maze.Maze;
 import java.io.PrintWriter;
 import java.security.SecureRandom;
 import java.util.Scanner;
+import backend.academy.maze.utils.RandomUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,8 +37,6 @@ public class ParserMazeParametersTest {
     @Mock
     PrintWriter writer;
 
-    @Mock
-    SecureRandom random;
 
     @InjectMocks
     ParserMazeParameters parserMazeParameters;
@@ -62,11 +63,17 @@ public class ParserMazeParametersTest {
         int expectedWidth = 15;
 
         when(scanner.nextLine()).thenReturn("", "");
-        when(random.nextInt(3, 11)).thenReturn(10);
-        when(random.nextInt(3, 16)).thenReturn(15);
 
-        int actualHeight = parserMazeParameters.parseMazeSizeParameter(10, 15, false);
-        int actualWidth = parserMazeParameters.parseMazeSizeParameter(10, 15, true);
+        int actualHeight;
+        int actualWidth;
+
+        try (MockedStatic<RandomUtil> randomUtilMock = mockStatic(RandomUtil.class)) {
+            randomUtilMock.when(() -> RandomUtil.getRandomInt(3, 11)).thenReturn(10);
+            randomUtilMock.when(() -> RandomUtil.getRandomInt(3, 16)).thenReturn(15);
+
+            actualHeight = parserMazeParameters.parseMazeSizeParameter(10, 15, false);
+            actualWidth = parserMazeParameters.parseMazeSizeParameter(10, 15, true);
+        }
 
         assertThat(actualHeight).isEqualTo(expectedHeight);
         assertThat(actualWidth).isEqualTo(expectedWidth);
@@ -94,7 +101,7 @@ public class ParserMazeParametersTest {
         Coordinate expectedFinishCoordinate = new Coordinate(8, 8);
 
         when(scanner.nextLine()).thenReturn("", "");
-        when(maze.getRandomCoordinate(random))
+        when(maze.getRandomCoordinate())
             .thenReturn(new Coordinate(1, 1), new Coordinate(8, 8));
 
         Coordinate actualStartCoordinate = parserMazeParameters.parseStartCoordinate(maze);

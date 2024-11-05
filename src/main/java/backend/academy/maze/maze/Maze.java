@@ -1,6 +1,6 @@
 package backend.academy.maze.maze;
 
-import java.security.SecureRandom;
+import backend.academy.maze.utils.RandomUtil;
 import java.util.Arrays;
 import java.util.List;
 import lombok.Getter;
@@ -28,10 +28,10 @@ public class Maze {
      *
      * @return клетку-проход/поверхность лабиринта
      */
-    public Coordinate getRandomCoordinate(SecureRandom random) {
+    public Coordinate getRandomCoordinate() {
         initializeNotWallCells();
 
-        Cell randomCell = notWallCells.get(random.nextInt(notWallCells.size()));
+        Cell randomCell = notWallCells.get(RandomUtil.getRandomInt(notWallCells.size()));
 
         return new Coordinate(randomCell.row(), randomCell.col());
     }

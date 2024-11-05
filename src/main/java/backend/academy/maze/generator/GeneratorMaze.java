@@ -2,7 +2,7 @@ package backend.academy.maze.generator;
 
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Maze;
-import java.security.SecureRandom;
+import backend.academy.maze.utils.RandomUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
  * Абстрактный класс для генератора лабиринта
  */
 @RequiredArgsConstructor
+@Getter
 public abstract class GeneratorMaze {
 
     private final static int MIN_SIZE = 3;
@@ -24,16 +25,13 @@ public abstract class GeneratorMaze {
     private final static int SWAMP_CHANCE = 99;
     private final static int REMOVE_WALL_CHANCE = 33;
 
-    protected final SecureRandom random;
     /**
      * Максимальная высота лабиринта. Определяется размером терминала
      */
-    @Getter
     private final int maxHeight;
     /**
-     * Максимальная ширинеа лабиринта. Определяется размером терминала
+     * Максимальная ширина лабиринта. Определяется размером терминала
      */
-    @Getter
     private final int maxWidth;
 
     /**
@@ -108,7 +106,7 @@ public abstract class GeneratorMaze {
         // то нижний край лабиринта будет иметь двойные стены (рамка + последняя строка лабиринта)
         if (height % 2 == 0) {
             for (int col = 1; col < fullWidth - 1; col++) {
-                if (grid[fullHeight - 2][col].type() == Cell.CellType.WALL && random.nextBoolean()) {
+                if (grid[fullHeight - 2][col].type() == Cell.CellType.WALL && RandomUtil.getRandomBoolean()) {
                     grid[fullHeight - 2][col] = new Cell(fullHeight - 2, col, isWeighted ? getRandomCellType()
                         : Cell.CellType.PASSAGE);
                 }
@@ -119,7 +117,7 @@ public abstract class GeneratorMaze {
         // то правый край лабиринта будет иметь двойные стены (рамка + последний столбец лабиринта)
         if (width % 2 == 0) {
             for (int row = 1; row < fullHeight - 1; row++) {
-                if (grid[row][fullWidth - 2].type() == Cell.CellType.WALL && random.nextBoolean()) {
+                if (grid[row][fullWidth - 2].type() == Cell.CellType.WALL && RandomUtil.getRandomBoolean()) {
                     grid[row][fullWidth - 2] = new Cell(row, fullWidth - 2, isWeighted ? getRandomCellType()
                         : Cell.CellType.PASSAGE);
                 }
@@ -138,7 +136,8 @@ public abstract class GeneratorMaze {
     protected void randomizeWalls(Cell[][] grid, int height, int width) {
         for (int row = 1; row < height - 1; row++) {
             for (int col = 1; col < width - 1; col++) {
-                if (grid[row][col].type() == Cell.CellType.WALL && random.nextInt(RANDOM_BOUND) < REMOVE_WALL_CHANCE) {
+                if (grid[row][col].type() == Cell.CellType.WALL
+                    && RandomUtil.getRandomInt(RANDOM_BOUND) < REMOVE_WALL_CHANCE) {
                     grid[row][col] = new Cell(row, col, getRandomCellType());
                 }
             }
@@ -151,7 +150,7 @@ public abstract class GeneratorMaze {
      * @return тип клетки (поверхности)
      */
     protected Cell.CellType getRandomCellType() {
-        int randomValue = random.nextInt(RANDOM_BOUND);
+        int randomValue = RandomUtil.getRandomInt(RANDOM_BOUND);
 
         Cell.CellType cellType;
 

@@ -4,7 +4,6 @@ import backend.academy.maze.generator.GeneratorMaze;
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Coordinate;
 import backend.academy.maze.maze.Maze;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +13,8 @@ import java.util.List;
  */
 public class GeneratorKruskal extends GeneratorMaze {
 
-    public GeneratorKruskal(SecureRandom random, int maxHeight, int maxWidth) {
-        super(random, maxHeight, maxWidth);
+    public GeneratorKruskal(int maxHeight, int maxWidth) {
+        super(maxHeight, maxWidth);
     }
 
     @Override

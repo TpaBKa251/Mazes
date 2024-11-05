@@ -3,13 +3,12 @@ package backend.academy.maze.generator.impl;
 import backend.academy.maze.generator.GeneratorMaze;
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Maze;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Тесты класса GeneratorKruskal")
@@ -18,7 +17,7 @@ public class GeneratorKruskalTest {
     @DisplayName("Тест создания непустого лабиринта с корректными размерами")
     @Test
     void testGenerateMaze() {
-        GeneratorMaze generatorMaze = new GeneratorKruskal(new SecureRandom(), 100, 100);
+        GeneratorMaze generatorMaze = new GeneratorKruskal(100, 100);
 
         int expectedHeight = 100;
         int expectedWidth = 100;

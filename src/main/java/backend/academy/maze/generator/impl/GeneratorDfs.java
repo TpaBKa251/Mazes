@@ -3,7 +3,7 @@ package backend.academy.maze.generator.impl;
 import backend.academy.maze.generator.GeneratorMaze;
 import backend.academy.maze.maze.Cell;
 import backend.academy.maze.maze.Maze;
-import java.security.SecureRandom;
+import backend.academy.maze.utils.RandomUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +16,8 @@ public class GeneratorDfs extends GeneratorMaze {
     private static final int NEGATIVE_DIRECTION = -2;
     private static final int POSITIVE_DIRECTION = 2;
 
-    public GeneratorDfs(SecureRandom random, int maxHeight, int maxWidth) {
-        super(random, maxHeight, maxWidth);
+    public GeneratorDfs(int maxHeight, int maxWidth) {
+        super(maxHeight, maxWidth);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class GeneratorDfs extends GeneratorMaze {
 
         Cell[][] grid = initializeGrid(fullHeight, fullWidth);
 
-        int startRow = (random.nextInt(height / 2) * 2) + 1;
-        int startCol = (random.nextInt(width / 2) * 2) + 1;
+        int startRow = (RandomUtil.getRandomInt(height / 2) * 2) + 1;
+        int startCol = (RandomUtil.getRandomInt(width / 2) * 2) + 1;
 
         dfs(
             grid,
